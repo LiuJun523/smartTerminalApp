@@ -20,4 +20,11 @@ public class HelloWorldController {
 		
 		return "index";
 	}
+	
+	@RequestMapping(value="/lc", method=RequestMethod.GET)
+	public String lc(ModelMap model) {
+		model.addAttribute("message", "Welcome Again from Spring MVC");
+		
+		return "index";
+	}
 }
