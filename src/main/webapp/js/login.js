@@ -63,20 +63,28 @@ $(function() {
 	// Register
 	$("#btn_register").click(function() {
 		var registerObj = new Object();
-		registerObj.userid = $("#userid").val();
-		registerObj.name = $("#name").val();
+		// registerObj.userid = $("#userid").val();
+		registerObj.name = $("#userName").val();
 		registerObj.email = $("#email").val();
 		registerObj.password = $("#password").val();
 		var registerJson = JSON.stringify(registerObj);
-		$.post("main/register.do",
-				{"registerObj": registerObj},
+		alert(registerJson)
+		$.post("/smartTerminalApp/register",
+				{
+					"userName":registerObj.name,
+					"password":registerObj.password,
+					"email":registerObj.email
+//					"registerObj": registerObj
+				},
 				function(e) {
-					e = JSON.parse(e);
-					if(e.useridMsg) {
-						$("#useridDiv").addClass("has-error");
-						$("#useridMsg").removeClass("hidden");
-						$("#useridMsg").text(e.useridMsg);
-					}
+					alert(e);
+					window.location.href ="/smartTerminalApp/helloAgain";
+//					e = JSON.parse(e);
+//					if(e.useridMsg) {
+//						$("#useridDiv").addClass("has-error");
+//						$("#useridMsg").removeClass("hidden");
+//						$("#useridMsg").text(e.useridMsg);
+//					}
 				});
 	});
 });
