@@ -2,9 +2,9 @@ package com.iss.smartterminal.utils;
 
 import java.util.UUID;
 
-public class UUIDUtil {
+public class IDUtil {
 	
-	public static String getUUID() {
+	public static String generateID() {
 		return UUID.randomUUID().toString().replaceAll("-", "");
 	}
 }

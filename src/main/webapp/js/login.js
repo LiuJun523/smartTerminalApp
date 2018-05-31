@@ -63,22 +63,22 @@ $(function() {
 	// Register
 	$("#btn_register").click(function() {
 		var registerObj = new Object();
-		// registerObj.userid = $("#userid").val();
+		registerObj.nirc = $("#nirc").val();
 		registerObj.name = $("#userName").val();
 		registerObj.email = $("#email").val();
 		registerObj.password = $("#password").val();
 		var registerJson = JSON.stringify(registerObj);
 		alert(registerJson)
-		$.post("/smartTerminalApp/register",
+		$.post("/smartTerminalApp/doctor/register",
 				{
+					"nirc":registerObj.nirc,
 					"userName":registerObj.name,
 					"password":registerObj.password,
 					"email":registerObj.email
-//					"registerObj": registerObj
 				},
 				function(e) {
 					alert(e);
-					window.location.href ="/smartTerminalApp/helloAgain";
+//					window.location.href ="/smartTerminalApp/helloAgain";
 //					e = JSON.parse(e);
 //					if(e.useridMsg) {
 //						$("#useridDiv").addClass("has-error");
