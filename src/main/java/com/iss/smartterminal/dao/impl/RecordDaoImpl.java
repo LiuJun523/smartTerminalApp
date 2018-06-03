@@ -52,7 +52,7 @@ public class RecordDaoImpl implements RecordDao {
 		int result = -1;
 		try {
 			UpdateItemSpec updateItemSpec = new UpdateItemSpec().withPrimaryKey("recordId", record.getRecordId())
-					.withReturnValues(ReturnValue.ALL_NEW).withUpdateExpression("set #c = :e1 and #ut = :e2")
+					.withReturnValues(ReturnValue.ALL_NEW).withUpdateExpression("set #c = :e1, #ut = :e2")
 					.withConditionExpression("#id = :c1")
 					.withNameMap(new NameMap().with("#c", "comments").with("#ut", "updateTime").with("#id", "recordId"))
 					.withValueMap(new ValueMap().withJSON(":e1", JSON.toJSONString(record.getComments()))
@@ -180,7 +180,8 @@ public class RecordDaoImpl implements RecordDao {
 			Item item = null;
 			while (iterator.hasNext()) {
 				item = iterator.next();
-				recMap.put(item.getString("recordId"), (double) item.getLong("addTime"));
+				recMap.put(item.getString("patientId") + "_" + item.getString("recordId"),
+						(double) item.getLong("addTime"));
 			}
 
 		} catch (Exception e) {

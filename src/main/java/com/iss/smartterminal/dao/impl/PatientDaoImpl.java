@@ -17,10 +17,11 @@ public class PatientDaoImpl implements PatientDao {
 	public int add(Patient patient) {
 
 		String sql = String.format(
-				"insert into patient(id,addTime,delFlag,updateTime,nirc,userName,gender,birthday,phoneNumber,docid) values('%s', %d, %d, '%s', '%s', '%s', %d, '%s', '%s', '%s')",
+				"insert into patient(id,addTime,delFlag,updateTime,nirc,userName,gender,birthday,phoneNumber,docid,exLong,exString) values('%s', %d, %d, '%s', '%s', '%s', %d, '%s', '%s', '%s', %d, '%s')",
 				patient.getId(), patient.getAddTime(), 0, DateUtil.convertDate(patient.getUpdateTime()),
 				patient.getNirc(), patient.getUserName(), patient.getGender(),
-				DateUtil.convertDate(patient.getBirthday()), patient.getPhoneNumber(), patient.getDocid());
+				DateUtil.convertDate(patient.getBirthday()), patient.getPhoneNumber(), patient.getDocid(),
+				patient.getExLong(), patient.getExString());
 
 		return new BaseImpl().update(sql);
 	}
@@ -99,6 +100,33 @@ public class PatientDaoImpl implements PatientDao {
 		}
 
 		return patient;
+	}
+
+	@Override
+	public List<Patient> listByPatids(List<String> patIds) {
+
+		String ids = "";
+		for (String id : patIds) {
+			ids += "'" + id + "',";
+		}
+		ids = ids.substring(0, ids.length() - 1);
+		List<Patient> patients = new ArrayList<>();
+		try {
+			Statement stmt = RDSHelper.getConnection().createStatement();
+			String sql = "SELECT * FROM patient where delFlag=0 and id in (" + ids + ")";
+			System.out.println(sql);
+			ResultSet rs = stmt.executeQuery(sql);
+
+			while (rs.next()) {
+				Patient patient = getPatientFromRS(rs);
+				patients.add(patient);
+			}
+			rs.close();
+			stmt.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return patients;
 	}
 
 	private Patient getPatientFromRS(ResultSet rs) throws SQLException {

@@ -1,5 +1,7 @@
 package com.iss.smartterminal.controller;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,19 +18,22 @@ public class LoginController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView root() {
 
-		return new ModelAndView("index");
+		return new ModelAndView("redirect:/doctor/login");
 	}
 
 	@RequestMapping(value = "/doctor/login", method = RequestMethod.GET)
-	public ModelAndView loginPage() {
+	public ModelAndView loginPage(String nirc) {
 
-		return new ModelAndView("index");
+		ModelAndView mav = new ModelAndView("index");
+		mav.addObject("nirc", nirc);
+		
+		return mav;
 	}
 
 	@RequestMapping(value = "/doctor/login", method = RequestMethod.POST)
 	@ResponseJSONP
-	public ModelAndView login(@ModelAttribute("lPojo") LoginPojo lPojo) {
+	public String login(@ModelAttribute("lPojo") LoginPojo lPojo, HttpSession session ) {
 
-		return new LoginApp().doAction(lPojo);
+		return new LoginApp().doAction(lPojo, session);
 	}
 }

@@ -35,58 +35,58 @@ $(function() {
 		});
 	});
 	
-	// Login
-	$("#btn_login").click(function() {
-		var loginObj = new Object();
-		loginObj.userid = $("#userid").val();
-		loginObj.password = $("#password").val();
-		var loginJson = JSON.stringify(loginObj);
-		self.location = "main.html?userid=" + loginObj.userid;
-		$.post("main/login.do",
-				{"loginObj": loginObj},
-				function(e) {
-					e = JSON.parse(e);
-					if(e.useridMsg) {
-						$("#useridDiv").addClass("has-error");
-						$("#useridMsg").removeClass("hidden");
-						$("#useridMsg").text(e.useridMsg);
-					} else if(e.passwordMsg) {
-						$("#passwordDiv").addClass("has-error");
-						$("#passwordMsg").removeClass("hidden");
-						$("#passwordMsg").text(e.passwordMsg);
-					} else {
-						self.location = "main.html"
-					}
-				});
-	});
-	
-	// Register
-	$("#btn_register").click(function() {
-		var registerObj = new Object();
-		registerObj.nirc = $("#nirc").val();
-		registerObj.name = $("#userName").val();
-		registerObj.email = $("#email").val();
-		registerObj.password = $("#password").val();
-		var registerJson = JSON.stringify(registerObj);
-		alert(registerJson)
-		$.post("/smartTerminalApp/doctor/register",
-				{
-					"nirc":registerObj.nirc,
-					"userName":registerObj.name,
-					"password":registerObj.password,
-					"email":registerObj.email
-				},
-				function(e) {
-					alert(e);
-//					window.location.href ="/smartTerminalApp/helloAgain";
+//	// Login
+//	$("#btn_login").click(function() {
+//		var loginObj = new Object();
+//		loginObj.userid = $("#userid").val();
+//		loginObj.password = $("#password").val();
+//		var loginJson = JSON.stringify(loginObj);
+//		self.location = "main.html?userid=" + loginObj.userid;
+//		$.post("main/login.do",
+//				{"loginObj": loginObj},
+//				function(e) {
 //					e = JSON.parse(e);
 //					if(e.useridMsg) {
 //						$("#useridDiv").addClass("has-error");
 //						$("#useridMsg").removeClass("hidden");
 //						$("#useridMsg").text(e.useridMsg);
+//					} else if(e.passwordMsg) {
+//						$("#passwordDiv").addClass("has-error");
+//						$("#passwordMsg").removeClass("hidden");
+//						$("#passwordMsg").text(e.passwordMsg);
+//					} else {
+//						self.location = "main.html"
 //					}
-				});
-	});
+//				});
+//	});
+	
+	// Register
+//	$("#btn_register").click(function() {
+//		var registerObj = new Object();
+//		registerObj.nirc = $("#nirc").val();
+//		registerObj.name = $("#userName").val();
+//		registerObj.email = $("#email").val();
+//		registerObj.password = $("#password").val();
+//		var registerJson = JSON.stringify(registerObj);
+//		alert(registerJson)
+//		$.post("/smartTerminalApp/doctor/register",
+//				{
+//					"nirc":registerObj.nirc,
+//					"userName":registerObj.name,
+//					"password":registerObj.password,
+//					"email":registerObj.email
+//				},
+//				function(e) {
+//					alert(e);
+////					window.location.href ="/smartTerminalApp/helloAgain";
+////					e = JSON.parse(e);
+////					if(e.useridMsg) {
+////						$("#useridDiv").addClass("has-error");
+////						$("#useridMsg").removeClass("hidden");
+////						$("#useridMsg").text(e.useridMsg);
+////					}
+//				});
+//	});
 });
 
 

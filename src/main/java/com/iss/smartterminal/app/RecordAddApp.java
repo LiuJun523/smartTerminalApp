@@ -26,24 +26,25 @@ public class RecordAddApp {
 	public String doAction(String imgUrl) {
 
 		JSONObject jo = new JSONObject();
-		int state = -1;
-		String msg = "";
+		int state = 0;
+		String msg = "add record failed";
 
-		String patientId = imgUrl.split("/")[imgUrl.split("/").length - 1].split("_")[0];
-		Patient patient = patientDao.getPatientById(patientId);
+		String patientNirc = imgUrl.split("/")[imgUrl.split("/").length - 1].split("_")[0];
+		List<Patient> tmpPatients = patientDao.listByNirc(patientNirc);
+		if (tmpPatients != null && tmpPatients.size() > 0) {
+			Patient patient = patientDao.listByNirc(patientNirc).get(0);
 
-		Record record = generateRecord(imgUrl, patient);
-		if (recordDao.add(record) > 0) {
-			List<Relationship> relationships = relationshipDao.listByPatientid(patientId);
-			relationships.forEach(r -> {
-				ECacheHelper.getJedis().zadd(r.getDocid(), record.getAddTime(), record.getRecordId());
-				ECacheHelper.rmExtra(r.getDocid());
-			});
-			state = 1;
-			msg = "add record success";
-		} else {
-			state = 0;
-			msg = "add record failed";
+			Record record = generateRecord(imgUrl, patient);
+			if (recordDao.add(record) > 0) {
+				List<Relationship> relationships = relationshipDao.listByPatientid(patient.getId());
+				relationships.forEach(r -> {
+					ECacheHelper.getJedis().zadd(r.getDocid(), record.getAddTime(),
+							record.getPatientId() + "_" + record.getRecordId());
+					ECacheHelper.rmExtra(r.getDocid());
+				});
+				state = 1;
+				msg = "add record success";
+			}
 		}
 
 		jo.put("state", state);

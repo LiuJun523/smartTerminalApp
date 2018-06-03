@@ -72,8 +72,11 @@ public class SubscribeApp {
 				patientIds.add(patid);
 				Map<String, Double> recMap = recordDao.getIdandAtimeByPatientids(patientIds, new Date().getTime(),
 						ConfConstant.MAX_FEED);
-				ECacheHelper.getJedis().zadd(docid, recMap);
-				ECacheHelper.rmExtra(docid);
+				System.out.println(recMap.size());
+				if (recMap.size() > 0) {
+					ECacheHelper.getJedis().zadd(docid, recMap);
+					ECacheHelper.rmExtra(docid);
+				}
 				state = 1;
 				msg = "subscribe success";
 			} else {

@@ -11,6 +11,8 @@ public interface PatientDao {
 	public List<Patient> listByNirc(String nirc);
 
 	public List<Patient> listByDocid(String docid);
+	
+	public List<Patient> listByPatids(List<String> patIds);
 
 	public int isPatientExist(String nirc);
 

@@ -16,10 +16,10 @@ import com.iss.smartterminal.pojo.PatientPojo;
 public class PatientController {
 
 	@RequestMapping(value = "/doctor/patient", method = RequestMethod.GET)
-	public ModelAndView addPatientPage(@RequestParam("docId") String docId) {
+	public ModelAndView addPatientPage(@RequestParam("docid") String docid) {
 		
 		ModelAndView mav = new ModelAndView("add");
-		mav.addObject("docId", docId);
+		mav.addObject("docid", docid);
 		
 		return mav;
 	}
@@ -32,9 +32,8 @@ public class PatientController {
 	}
 	
 	@RequestMapping(value = "/doctor/{docid}/patientlist", method = RequestMethod.GET)
-	@ResponseJSONP
-	public String patientList(@PathVariable String docid) {
+	public ModelAndView patientList(@PathVariable String docid) {
 		
-		return new PatientApp().doAction(docid);
+		return new PatientApp().doAction(docid, "mypatients");
 	}
 }

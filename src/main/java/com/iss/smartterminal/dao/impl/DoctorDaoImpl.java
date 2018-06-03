@@ -15,9 +15,10 @@ public class DoctorDaoImpl implements DoctorDao {
 	public int add(Doctor doctor) {
 
 		String sql = String.format(
-				"insert into doctor(id,addTime,delFlag,updateTime,nirc,userName,password,email) values('%s', %d, %d, '%s', '%s', '%s', '%s', '%s')",
+				"insert into doctor(id,addTime,delFlag,updateTime,nirc,userName,password,email,exLong,exString,hospital,department,phoneNumber) values('%s', %d, %d, '%s', '%s', '%s', '%s', '%s', %d, '%s', '%s', '%s', '%s')",
 				doctor.getId(), doctor.getAddTime(), 0, DateUtil.convertDate(doctor.getUpdateTime()), doctor.getNirc(),
-				doctor.getUserName(), doctor.getPassword(), doctor.getEmail());
+				doctor.getUserName(), doctor.getPassword(), doctor.getEmail(), doctor.getExLong(), doctor.getExString(),
+				doctor.getHospital(), doctor.getDepartment(), doctor.getPhoneNumber());
 
 		return new BaseImpl().update(sql);
 	}
@@ -26,9 +27,9 @@ public class DoctorDaoImpl implements DoctorDao {
 	public int update(Doctor doctor) {
 
 		String sql = String.format(
-				"update doctor set updateTime='%s', email='%s', phoneNumber='%s', hospital='%s', department='%s' where id='%s';",
-				DateUtil.convertDate(doctor.getUpdateTime()), doctor.getEmail(), doctor.getPhoneNumber(),
-				doctor.getHospital(), doctor.getDepartment(), doctor.getId());
+				"update doctor set updateTime='%s', phoneNumber='%s', hospital='%s', department='%s' where id='%s';",
+				DateUtil.convertDate(doctor.getUpdateTime()), doctor.getPhoneNumber(), doctor.getHospital(),
+				doctor.getDepartment(), doctor.getId());
 
 		return new BaseImpl().update(sql);
 	}
@@ -67,7 +68,7 @@ public class DoctorDaoImpl implements DoctorDao {
 
 	@Override
 	public Doctor getDoctByNircPwd(Doctor doctor) {
-		
+
 		Doctor resdoc = null;
 		String sql = String.format("SELECT * FROM doctor where delFlag=0 and nirc='%s' and password='%s' limit 1",
 				doctor.getNirc(), doctor.getPassword());

@@ -60,67 +60,42 @@
 	<!-- Page Content -->
 	<div class="container">
 		<!-- Page Heading/Breadcrumbs -->
-		<h1 class="mt-4 mb-3">Personal Information</h1>
+		<h1 class="mt-4 mb-3">My Patients</h1>
 
 		<ol class="breadcrumb">
 			<li class="breadcrumb-item"><a
-				href="/smartTerminalApp/doctor/main">Home</a></li>
-			<li class="breadcrumb-item active">Personal Info.</li>
+				href="/smartTerminalApp/doctor/main?docid=${docid}l">Home</a></li>
+			<li class="breadcrumb-item active">My Patients</li>
 		</ol>
 
-		<!-- Info. Form -->
-		<div class="content-wrapper">
+		<!-- Info. Table -->
+		<div class="main-panel">
 			<div class="row">
-				<div class="col-lg-8 mb-4">
-					<form name="info" id="infoForm" novalidate>
-						<div class="control-group form-group">
-							<div class="controls">
-								<label>Nirc/FIN</label> <input type="text" class="form-control"
-									id="nirc" value=${doctor.nirc} disabled>
+				#foreach( $patient in $patients)
+    				<div class="col-lg-4 mb-4">
+					<div class="card card-outline-primary h-100">
+						<h3 class="card-header bg-primary text-white"></h3>
+						<div class="card-body">
+							<div class="display-4">$patient.userName</div>
+							<div class="font-italic">
+							$patient.nirc (
+							#if($patient.gender == 0)
+								Female
+							#else
+								Male
+							#end
+							, &nbsp;&nbsp;&nbsp;&nbsp;$patient.birthday)
 							</div>
 						</div>
-						<div class="control-group form-group">
-							<div class="controls">
-								<label>Name</label> <input type="text" class="form-control"
-									id="userName" value='${doctor.userName}' disabled>
-							</div>
-						</div>
-						<div class="control-group form-group">
-							<div class="controls">
-								<label>Email Address</label> <input type="email"
-									class="form-control" id="email" value=${doctor.email} disabled>
-							</div>
-						</div>
-						<div class="control-group form-group">
-							<div class="controls">
-								<label>Phone Number</label> <input type="tel"
-									class="form-control" id="phoneNumber" required
-									data-validation-required-message="Please enter your phone number."
-									value=${doctor.phoneNumber}>
-							</div>
-						</div>
-						<div class="control-group form-group">
-							<div class="controls">
-								<label>Hospital</label> <input type="text" class="form-control"
-									id="hospital" value=${doctor.hospital}>
-							</div>
-						</div>
-						<div class="control-group form-group">
-							<div class="controls">
-								<label>Department</label> <input type="text"
-									class="form-control" id="department" value=${doctor.department}>
-							</div>
-						</div>
-						<!-- <div class="control-group form-group">
-			              <div class="controls">
-			                <label>Password</label>
-			                <input type="password" class="form-control" id="password" required data-eye data-validation-required-message="Please enter your password.">
-			              </div>
-			            </div> -->
-
-						<button type="button" class="btn btn-primary" id="btn_updateInfo">Submit</button>
-					</form>
+						<button type="button" class="btn btn-danger btn-fw" onclick="unsubscribe(this)" value="$patient.id">Unfollow</button>
+						<!-- <ul class="list-group list-group-flush">
+							<li class="list-group-item">
+								<button type="button" class="btn btn-danger btn-fw">Unfollow</button>
+							</li>
+						</ul> -->
+					</div>
 				</div>
+				#end
 			</div>
 		</div>
 	</div>

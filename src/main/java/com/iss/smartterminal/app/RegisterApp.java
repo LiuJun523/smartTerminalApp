@@ -55,6 +55,11 @@ public class RegisterApp {
 		doctor.setUserName(rPojo.getUserName());
 		doctor.setPassword(MD5Util.encryp(rPojo.getPassword()));
 		doctor.setNirc(rPojo.getNirc());
+		doctor.setHospital("");
+		doctor.setDepartment("");
+		doctor.setPhoneNumber("");
+		doctor.setExLong(0);
+		doctor.setExString("");
 		return doctor;
 	}
 
@@ -63,6 +68,7 @@ public class RegisterApp {
 		int state = doctorDao.add(doctor);
 		String msg = "add doctor " + doctor.getNirc() + " failed.";
 		if (state > 0) {
+			state = 1;
 			msg = "add doctor " + doctor.getNirc() + " success.";
 		}
 		Map<String, Object> resultMap = new HashMap<>();
